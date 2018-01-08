@@ -9,7 +9,7 @@ const uint8_t RUN_MESSAGE_ISSUE[]		= "[ RUN_MESSAGE_ISSUE ]\t";
 const uint8_t RUN_MESSAGE_ERROR[]		= "[ RUN_MESSAGE_ERROR ]\t";
 
 const uint8_t* start_string[6] = {
-		INIT_OK, INIT_ISSUE, INIT_ERROR, RUN_MESSAGE_OK, RUN_MESSAGE_ISSUE, RUN_MESSAGE_ERROR
+	INIT_OK, INIT_ISSUE, INIT_ERROR, RUN_MESSAGE_OK, RUN_MESSAGE_ISSUE, RUN_MESSAGE_ERROR
 };
 
 run_time_logger::run_time_logger( const run_time_logger_cfg* const cfg ) : cfg( cfg ) {
