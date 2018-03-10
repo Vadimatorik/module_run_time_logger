@@ -35,7 +35,7 @@ struct color_message_struct {
 
 struct run_time_logger_cfg {
 	color_message_struct		color;
-    void ( *out_buffer )     ( char* string );
+	void ( *out_buffer )		( char* string );
 };
 
 class run_time_logger {
@@ -43,11 +43,12 @@ public:
 	run_time_logger( const run_time_logger_cfg* const cfg );
 
 	void send_message( RTL_TYPE_M type, const char* string );
+
 private:
 	mutable	char message_buffer[ 512 ];											// Символов на строку.
 	const run_time_logger_cfg* const cfg;
-	mutable USER_OS_STATIC_MUTEX                    	m = nullptr;
-	mutable USER_OS_STATIC_MUTEX_BUFFER             	mb;
+	mutable USER_OS_STATIC_MUTEX						m = nullptr;
+	mutable USER_OS_STATIC_MUTEX_BUFFER					mb;
 	mutable	const char*									color[6];
 };
 

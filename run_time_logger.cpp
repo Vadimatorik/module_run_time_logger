@@ -23,8 +23,8 @@ run_time_logger::run_time_logger( const run_time_logger_cfg* const cfg ) : cfg( 
 }
 
 void run_time_logger::send_message( RTL_TYPE_M type, const char* string ) {
-    if ( this->m != nullptr)				USER_OS_TAKE_MUTEX( this->m, portMAX_DELAY );
+	if ( this->m != nullptr)				USER_OS_TAKE_MUTEX( this->m, portMAX_DELAY );
 	snprintf( this->message_buffer, 512, "%s %s %s \n\r", this->color[ ( uint8_t )type ], start_string[ ( uint8_t )type ], string );
 	this->cfg->out_buffer( this->message_buffer );
-    if ( this->m != nullptr)				USER_OS_GIVE_MUTEX( this->m );
+	if ( this->m != nullptr)				USER_OS_GIVE_MUTEX( this->m );
 }
