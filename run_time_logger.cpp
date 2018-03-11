@@ -22,9 +22,11 @@ run_time_logger::run_time_logger( const run_time_logger_cfg* const cfg ) : cfg( 
 	this->color[ 5 ] = this->cfg->color.run_message_error_color_string;
 }
 
-void run_time_logger::send_message( RTL_TYPE_M type, const char* string ) {
+BASE_RESULT run_time_logger::send_message( RTL_TYPE_M type, const char* string ) {
 	if ( this->m != nullptr)				USER_OS_TAKE_MUTEX( this->m, portMAX_DELAY );
+	BASE_RESULT r;
 	snprintf( this->message_buffer, 512, "%s %s %s \n\r", this->color[ ( uint8_t )type ], start_string[ ( uint8_t )type ], string );
-	this->cfg->out_buffer( this->message_buffer );
+	r = this->cfg->out_buffer( this->message_buffer );
 	if ( this->m != nullptr)				USER_OS_GIVE_MUTEX( this->m );
+	return r;
 }

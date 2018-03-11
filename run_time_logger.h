@@ -4,6 +4,7 @@
 
 #include <stdint.h>
 #include "user_os.h"
+#include "mc_hardware_interfaces_base.h"
 
 enum class RTL_TYPE_M {
 	INIT_OK				= 0,							// Инициализация идет нормально.
@@ -34,15 +35,15 @@ struct color_message_struct {
 };
 
 struct run_time_logger_cfg {
-	color_message_struct		color;
-	void ( *out_buffer )		( char* string );
+	color_message_struct				color;
+	BASE_RESULT ( *out_buffer )			( char* string );
 };
 
 class run_time_logger {
 public:
 	run_time_logger( const run_time_logger_cfg* const cfg );
 
-	void send_message( RTL_TYPE_M type, const char* string );
+	BASE_RESULT send_message( RTL_TYPE_M type, const char* string );
 
 private:
 	mutable	char message_buffer[ 512 ];											// Символов на строку.

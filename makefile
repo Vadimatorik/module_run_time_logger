@@ -11,7 +11,7 @@ RUN_TIME_LOGGER_OBJ_FILE		:= $(patsubst %.cpp, %.o, $(RUN_TIME_LOGGER_OBJ_FILE))
 build/obj/module_run_time_logger/%.o:	module_run_time_logger/%.cpp
 	@echo [CPP] $<
 	@mkdir -p $(dir $@)
-	@$(CPP) $(CPP_FLAGS) $(DEFINE_PROJ) $(USER_CFG_PATH) $(RUN_TIME_LOGGER_PATH) $(FREE_RTOS_PATH) $(MODULE_RUN_TIME_LOGGER_OPTIMIZATION) -c $< -o $@
+	@$(CPP) $(CPP_FLAGS) $(DEFINE_PROJ) $(USER_CFG_PATH) $(RUN_TIME_LOGGER_PATH) $(FREE_RTOS_PATH) $(MODULE_RUN_TIME_LOGGER_OPTIMIZATION) $(PROJECT_PATH) -c $< -o $@
 
 # Добавляем к общим переменным проекта.
 PROJECT_PATH			+= $(RUN_TIME_LOGGER_PATH)
