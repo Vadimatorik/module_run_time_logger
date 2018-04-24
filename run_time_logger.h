@@ -39,11 +39,11 @@ struct run_time_logger_cfg {
 	BASE_RESULT ( *out_buffer )			( char* string );
 };
 
-class run_time_logger {
+class RunTimeLogger {
 public:
-	run_time_logger( const run_time_logger_cfg* const cfg );
+	RunTimeLogger( const run_time_logger_cfg* const cfg );
 
-	BASE_RESULT send_message( RTL_TYPE_M type, const char* string );
+	BASE_RESULT sendMessage( RTL_TYPE_M type, const char* string );
 
 private:
 	mutable	char message_buffer[ 512 ];											// Символов на строку.
