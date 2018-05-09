@@ -1,5 +1,7 @@
 #include "run_time_logger.h"
 
+#ifdef MODULE_RUN_TIME_LOGGER_ENABLED
+
 #include <stdio.h>
 
 const uint8_t INIT_OK[]					= "[ INIT_OK ]\t\t";
@@ -31,3 +33,5 @@ BASE_RESULT RunTimeLogger::sendMessage( RTL_TYPE_M type, const char* string ) {
 	if ( this->m != nullptr)				USER_OS_GIVE_MUTEX( this->m );
 	return r;
 }
+
+#endif

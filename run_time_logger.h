@@ -1,5 +1,7 @@
 #pragma once
 
+#ifdef MODULE_RUN_TIME_LOGGER_ENABLED
+
 #ifdef __cplusplus
 
 #include <stdint.h>
@@ -52,5 +54,7 @@ private:
 	mutable USER_OS_STATIC_MUTEX_BUFFER					mb;
 	mutable	const char*									color[6];
 };
+
+#endif
 
 #endif
