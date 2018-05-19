@@ -56,7 +56,7 @@ void RunTimeLogger::task ( void* pObj ) {
 
 
 void RunTimeLogger::sendMessage( RTL_TYPE_M type, const char* string ) {
-	if ( this->m != nullptr)				USER_OS_TAKE_MUTEX( this->m, portMAX_DELAY );
+	USER_OS_TAKE_MUTEX( this->m, portMAX_DELAY );
 
 	uint32_t lenString = 0;
 	lenString += strlen( this->color[ ( uint8_t )type ] ) + 2;
@@ -81,7 +81,7 @@ void RunTimeLogger::sendMessage( RTL_TYPE_M type, const char* string ) {
 
 	USER_OS_QUEUE_SEND( this->qMessage, &messageString, portMAX_DELAY );
 
-	if ( this->m != nullptr)				USER_OS_GIVE_MUTEX( this->m );
+	USER_OS_GIVE_MUTEX( this->m );
 
 	return;
 }
