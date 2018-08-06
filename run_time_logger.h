@@ -39,7 +39,7 @@ struct colorMessageStruct {
 
 struct runTimeLoggerCfg {
 	colorMessageStruct					color;
-	BASE_RESULT ( *outBuffer )			( const char* string );
+	BaseResult ( *outBuffer )			( const char* string );
 };
 
 #define MAX_COUNT_MESSAGE_IN_QUEUE				20
