@@ -1,5 +1,7 @@
 #pragma once
 
+#include "project_config.h"
+
 #ifdef MODULE_RUN_TIME_LOGGER_ENABLED
 
 #ifdef __cplusplus
