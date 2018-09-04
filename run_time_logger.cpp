@@ -47,7 +47,7 @@ void RunTimeLogger::task ( void* pObj ) {
 		USER_OS_QUEUE_RECEIVE(o->qMessage, &message, portMAX_DELAY );
 
 		/// Передаем до победного.
-		while( o->cfg->outBuffer( message ) != BaseResult::ok );
+		while( o->cfg->outBuffer( message ) != McHardwareInterfaces::BaseResult::ok );
 
 		/// Убираем за собой.
 		vPortFree( message );
