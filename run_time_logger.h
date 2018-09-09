@@ -44,9 +44,7 @@ struct runTimeLoggerCfg {
 	McHardwareInterfaces::BaseResult	( *outBuffer )			( const char* string );
 };
 
-#define MAX_COUNT_MESSAGE_IN_QUEUE				20
-#define RUN_TIME_LOGGER_TASK_SIZE				200
-#define	RUN_TIME_LOGGER_PRIO					2
+#define MAX_MESSAGE_LEN				1024
 
 class RunTimeLogger {
 public:
@@ -55,20 +53,14 @@ public:
 	void sendMessage( RTL_TYPE_M type, const char* string );
 
 private:
-	static	void	task						( void* pObj );
-
 	const runTimeLoggerCfg* const cfg;
 
-	USER_OS_STATIC_MUTEX						m = nullptr;
-	USER_OS_STATIC_MUTEX_BUFFER					mb;
-	const char*									color[6];
+	USER_OS_STATIC_MUTEX			m = nullptr;
+	USER_OS_STATIC_MUTEX_BUFFER		mb;
+	const char*						color[6];
 
-	USER_OS_STATIC_QUEUE						qMessage;
-	USER_OS_STATIC_QUEUE_STRUCT					qsMessage;
-	char*										qbMessage[ MAX_COUNT_MESSAGE_IN_QUEUE ];
+	char							bufMessage[ MAX_MESSAGE_LEN ];
 
-	USER_OS_STATIC_STACK_TYPE					tbTask[ RUN_TIME_LOGGER_TASK_SIZE ];
-	USER_OS_STATIC_TASK_STRUCT_TYPE				tsTask;
 };
 
 #endif
