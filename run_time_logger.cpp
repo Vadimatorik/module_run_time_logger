@@ -4,8 +4,9 @@
 
 #include <stdio.h>
 #include <string.h>
+#include <errno.h>
 
-const char INIT_OK[]					= "[ INIT_OK ]\t\t";
+const char INIT_OK[]				= "[ INIT_OK ]\t\t";
 const char INIT_ISSUE[]				= "[ INIT_ISSUE ]\t\t";
 const char INIT_ERROR[]				= "[ INIT_ERROR ]\t\t";
 const char RUN_MESSAGE_OK[]			= "[ RUN_MESSAGE_OK ]\t";
@@ -16,7 +17,7 @@ const char* startString[6] = {
 	INIT_OK, INIT_ISSUE, INIT_ERROR, RUN_MESSAGE_OK, RUN_MESSAGE_ISSUE, RUN_MESSAGE_ERROR
 };
 
-RunTimeLogger::RunTimeLogger( const runTimeLoggerCfg* const cfg ) : cfg( cfg ) {
+RunTimeLogger::RunTimeLogger( const RunTimeLoggerCfg* const cfg ) : cfg( cfg ) {
 	this->m = USER_OS_STATIC_MUTEX_CREATE( &mb );
 	this->color[ 0 ] = this->cfg->color.initOkColorString;
 	this->color[ 1 ] = this->cfg->color.initIssueColorString;
@@ -26,13 +27,21 @@ RunTimeLogger::RunTimeLogger( const runTimeLoggerCfg* const cfg ) : cfg( cfg ) {
 	this->color[ 5 ] = this->cfg->color.runMessageErrorColorString;
 }
 
-void RunTimeLogger::sendMessage( RTL_TYPE_M type, const char* string ) {
+int RunTimeLogger::sendMessage( RTL_TYPE_M type, const char* message ) {
 	USER_OS_TAKE_MUTEX( this->m, portMAX_DELAY );
 
-	snprintf( this->bufMessage, MAX_MESSAGE_LEN, "%s %s %s \n\r", this->color[ ( uint8_t )type ], startString[ ( uint8_t )type ], string );
-	this->cfg->outBuffer( ( char* )this->bufMessage );
+	snprintf( this->bufMessage, MAX_MESSAGE_LEN, "%s %s %s \n\r", this->color[ ( uint8_t )type ], startString[ ( uint8_t )type ], message );
+
+	McHardwareInterfaces::BaseResult r;
+	r = this->cfg->outBuffer( ( char* )this->bufMessage );
 
 	USER_OS_GIVE_MUTEX( this->m );
+
+	if ( r == McHardwareInterfaces::BaseResult::ok ) {
+		return EOK;
+	} else {
+		return EIO;
+	}
 }
 
 #endif

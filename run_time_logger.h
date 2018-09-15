@@ -10,6 +10,10 @@
 #include "user_os.h"
 #include "mc_hardware_interfaces_base.h"
 
+#if !defined( EOK )
+#define	EOK					0							/// No error.
+#endif
+
 enum class RTL_TYPE_M {
 	INIT_OK				= 0,							// Инициализация идет нормально.
 	INIT_ISSUE			= 1,							// Есть некоторые затруднения, но можно и без этого жить.
@@ -39,7 +43,7 @@ struct colorMessageStruct {
 	const char*		runMessageErrorColorString;
 };
 
-struct runTimeLoggerCfg {
+struct RunTimeLoggerCfg {
 	colorMessageStruct					color;
 	McHardwareInterfaces::BaseResult	( *outBuffer )			( const char* string );
 };
@@ -48,12 +52,26 @@ struct runTimeLoggerCfg {
 
 class RunTimeLogger {
 public:
-	RunTimeLogger( const runTimeLoggerCfg* const cfg );
+	RunTimeLogger( const RunTimeLoggerCfg* const cfg );
 
-	void sendMessage( RTL_TYPE_M type, const char* string );
+	/*!
+	 *	\brief		Метод формирует выходную строку согласно
+	 *				типу сообщения и производит ее отправку
+	 *				через указанный пользователем при
+	 *				инициализации метод.
+	 *
+	 *	\param[in]	type		-	тип записываемого в log сообщения.
+	 *	\param[in]	message		-	строка с текстом записываемого сообщения.
+	 *								Примечание:	после вызова метода
+	 *											может быть удалена.
+	 *
+	 *	\return		EOK			-	Успешность операции.
+	 *								В противном случае код из errno.h.
+	 */
+	int sendMessage( RTL_TYPE_M type, const char* message );
 
 private:
-	const runTimeLoggerCfg* const cfg;
+	const RunTimeLoggerCfg* const cfg;
 
 	USER_OS_STATIC_MUTEX			m = nullptr;
 	USER_OS_STATIC_MUTEX_BUFFER		mb;
