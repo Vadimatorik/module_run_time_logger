@@ -33,12 +33,12 @@ int RunTimeLogger::sendMessage (RTL_TYPE_M type, const char *message) {
     snprintf(this->bufMessage, MAX_MESSAGE_LEN, "%s %s %s \n\r", this->color[(uint8_t)type], startString[(uint8_t)type],
              message);
     
-    McHardwareInterfaces::BaseResult r;
+    mc_interfaces::res r;
     r = this->cfg->outBuffer((char *)this->bufMessage);
     
     USER_OS_GIVE_MUTEX(this->m);
     
-    if (r == McHardwareInterfaces::BaseResult::ok) {
+    if (r == mc_interfaces::res::ok) {
         return EOK;
     } else {
         return EIO;

@@ -46,7 +46,7 @@ struct colorMessageStruct {
 struct RunTimeLoggerCfg {
     colorMessageStruct color;
     
-    McHardwareInterfaces::BaseResult ( *outBuffer ) (const char *string);
+    mc_interfaces::res ( *outBuffer ) (const char *string);
 };
 
 #define MAX_MESSAGE_LEN                1024
