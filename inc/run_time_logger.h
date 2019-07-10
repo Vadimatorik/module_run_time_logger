@@ -8,7 +8,7 @@
 
 #include <stdint.h>
 #include "user_os.h"
-#include "mc_hardware_interfaces_base.h"
+#include "mc_base.h"
 
 #if !defined( EOK )
 #define	EOK					0							/// No error.
