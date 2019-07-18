@@ -38,7 +38,7 @@ int RunTimeLogger::sendMessage (RTL_TYPE_M type, const char *message) {
     
     USER_OS_GIVE_MUTEX(this->m);
     
-    if (r == mc_interfaces::res::ok) {
+    if (r == mc_interfaces::res::err_ok) {
         return EOK;
     } else {
         return EIO;
