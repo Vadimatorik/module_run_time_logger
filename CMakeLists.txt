@@ -2,13 +2,13 @@
 CMAKE_MINIMUM_REQUIRED (VERSION 3.13.2)
 
 # Имя библиотеки.
-project (RUN_TIME_LOGGER)
+project (MODULE_RUN_TIME_LOGGER)
 
 # Производится проверка на то, что параметры оптимизации
 # проекта (библиотеки) заданы.
 # Они должны быть заданы в корневом проекте.
 # Пример:
-# SET (WAVE_GENERATORS_OPTIMIZATION_FLAGS "-O0;-g3;")
+# SET (MODULE_WAVE_GENERATORS_OPTIMIZATION_FLAGS "-O0;-g3;")
 if (NOT DEFINED ${PROJECT_NAME}_OPTIMIZATION_FLAGS)
     message (FATAL_ERROR
              "The value of the variable <<${PROJECT_NAME}_OPTIMIZATION_FLAGS>> is not specified!")
@@ -19,51 +19,51 @@ endif ()
 # Они должны быть заданы в корневом проекте.
 # Параметры должны быть обязательно разделены через <<;>>.
 # Пример:
-# SET (WAVE_GENERATORS_COMPILER_FLAGS
+# SET (MODULE_WAVE_GENERATORS_COMPILER_FLAGS
 #      "${MICROCONTROLLER_HARDWARE_FLAGS};${CPP_COMPILER_FLAGS};")
 if (NOT DEFINED ${PROJECT_NAME}_COMPILER_FLAGS)
     message (FATAL_ERROR
              "The value of the variable <<${PROJECT_NAME}_COMPILER_FLAGS>> is not specified!")
 endif ()
 
-# Для сборки проекта WAVE_GENERATORS требуется обязательно указать путь
-# до папки с файлом конфигурации библиотеки WAVE_GENERATORS в проекте
+# Для сборки проекта MODULE_WAVE_GENERATORS требуется обязательно указать путь
+# до папки с файлом конфигурации библиотеки MODULE_WAVE_GENERATORS в проекте
 # пользователя (в корневом CMakeList).
 # Пример:
-# SET (WAVE_GENERATORS_CFG_H_PATH ${CMAKE_SOURCE_DIR}/cfg)
-if (NOT DEFINED ${PROJECT_NAME}_CFG_H_PATH)
+# SET (MODULE_WAVE_GENERATORS_CFG_H_FILES_PATH ${CMAKE_SOURCE_DIR}/cfg)
+if (NOT DEFINED ${PROJECT_NAME}_CFG_H_FILES_PATH)
     message (FATAL_ERROR
-            "The value of the variable <<${PROJECT_NAME}_CFG_H_PATH>> is not specified!")
+            "The value of the variable <<${PROJECT_NAME}_CFG_H_FILES_PATH>> is not specified!")
 endif()
 
 # Путь до файла user_os.h с прослойками под конкретную операционную систему.
 # Должен быть обязательно указан.
-if (NOT DEFINED USER_OS_H_PATH)
+if (NOT DEFINED USER_OS_H_FILES_PATH)
     message (FATAL_ERROR
-            "The value of the variable <<USER_OS_H_PATH>> is not specified!")
+            "The value of the variable <<USER_OS_H_FILES_PATH>> is not specified!")
 endif()
 
 # Путь к заголовочным файлам операционной системы.
-if (NOT DEFINED USER_OS_PATH)
+if (NOT DEFINED USER_OS_H_FILES_PATH)
     message (FATAL_ERROR
-            "The value of the variable <<USER_OS_PATH>> is not specified!")
+            "The value of the variable <<USER_OS_H_FILES_PATH>> is not specified!")
 endif()
 
 # Путь до submodule с описанием интерфейсов должен быть указан обязательно.
 # Пример:
-# SET (MODULE_MC_HARDWARE_INTERFACES_PATH ${CMAKE_SOURCE_DIR}/bsp/submodule/module_mc_hardware_interfaces)
-if (NOT DEFINED MODULE_MC_HARDWARE_INTERFACES_PATH)
+# SET (MODULE_MC_HARDWARE_INTERFACES_H_FILES_PATH ${CMAKE_SOURCE_DIR}/bsp/submodule/module_mc_hardware_interfaces)
+if (NOT DEFINED MODULE_MC_HARDWARE_INTERFACES_H_FILES_PATH)
     message (FATAL_ERROR
-            "The value of the variable <<MODULE_MC_HARDWARE_INTERFACES_PATH>> is not specified!")
+            "The value of the variable <<MODULE_MC_HARDWARE_INTERFACES_H_FILES_PATH>> is not specified!")
 endif()
 
 
 # Для сборки требуется:
 include_directories(
-    ${MODULE_MC_HARDWARE_INTERFACES_PATH}
-    ${USER_OS_H_PATH} # Путь до файла user_os с прослойками под конкретную операционную систему.
-    ${USER_OS_PATH} # Путь к заголовочным файлам операционной системы.
-    ${${PROJECT_NAME}_CFG_H_PATH} # Путь до файла с разрешающим компиляцию данного файла объявлением.
+    ${MODULE_MC_HARDWARE_INTERFACES_H_FILES_PATH}
+    ${USER_OS_H_FILES_PATH} # Путь до файла user_os с прослойками под конкретную операционную систему.
+    ${USER_OS_H_FILES_PATH} # Путь к заголовочным файлам операционной системы.
+    ${${PROJECT_NAME}_CFG_H_FILES_PATH} # Путь до файла с разрешающим компиляцию данного файла объявлением.
     ${CMAKE_CURRENT_SOURCE_DIR}/inc
 )
 
